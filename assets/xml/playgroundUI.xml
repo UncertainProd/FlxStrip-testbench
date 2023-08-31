@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+    <nineslicesprite width="30%" height="100%" slice9="6,6,12,12" name="ui_panel">
+        <anchor x="right" y="center" x-flush="right" y-flush="center" />
+    </nineslicesprite>
+
+    <definition name="ui_panel_button_text" size="12" color="0xffffff" outline="0x000000" align="center" />
+    
+    <button name="add_vertex" x="10" y="20" width="150" height="50" label="+ Add Vertex">
+        <text use_def="ui_panel_button_text" />
+        <param type="string" value="vertex-add" />
+        <anchor x="ui_panel.left" x-flush="left" y="ui_panel.top" y-flush="top" />
+    </button>
+    
+    <button name="remove_vertex" x="10" y="20" width="150" height="50" label="- Remove Vertex">
+        <text use_def="ui_panel_button_text" />
+        <param type="string" value="vertex-remove" />
+        <anchor x="ui_panel.left" x-flush="left" y="add_vertex.bottom" y-flush="top" />
+    </button>
+</data>
