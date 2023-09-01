@@ -10,6 +10,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 
+using MyStringUtil;
+
 enum UIMode
 {
 	NORMAL;
@@ -57,7 +59,7 @@ class PlayState extends FlxUIState
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
 		super.getEvent(id, sender, data, params);
-		trace('Got event: id=$id | sender=${Type.typeof(sender)} | data=$data | params=$params');
+		// trace('Got event: id=$id | sender=${Type.typeof(sender)} | data=$data | params=$params');
 
 		switch id
 		{
@@ -131,7 +133,6 @@ class PlayState extends FlxUIState
 		thisState.points.remove(vert);
 		thisState.remove(vert);
 		thisState.updateStrip();
-		thisState.points.sort((vp1, vp2) -> FlxSort.byValues(FlxSort.ASCENDING, vp1.pointIndex, vp2.pointIndex));
 		for(i in 0...thisState.points.length)
 		{
 			thisState.points[i].pointIndex = i;
@@ -151,14 +152,18 @@ class PlayState extends FlxUIState
 	{
 		// update vertices
 		points.sort((vp1, vp2) -> FlxSort.byValues(FlxSort.ASCENDING, vp1.pointIndex, vp2.pointIndex));
+
 		var newVertices = [];
 		for(p in points)
 		{
-			newVertices.push(p.x + (0.5 + p.radius));
-			newVertices.push(p.y + (0.5 + p.radius));
+			newVertices.push(p.x + p.radius);
+			newVertices.push(p.y + p.radius);
 		}
 		flxstripSprite.vertices = DrawData.ofArray(newVertices);
 
+		#if debug
+		trace(sPrintArrayFancy(newVertices, 2));
+		#end
 		// update indices
 		// i, i+1, i+2
 		// i+1, i+3, i+2
@@ -166,7 +171,7 @@ class PlayState extends FlxUIState
 		var newIndices = [];
 		while (true)
 		{
-			if(i + 2 > points.length)
+			if (i + 2 >= points.length)
 			{
 				break;
 			}
@@ -177,7 +182,7 @@ class PlayState extends FlxUIState
 				newIndices.push(i+2);
 			}
 
-			if(i + 3 > points.length)
+			if (i + 3 >= points.length)
 			{
 				break;
 			}
@@ -190,6 +195,9 @@ class PlayState extends FlxUIState
 			i += 2;
 		}
 
+		#if debug
+		trace(sPrintArrayFancy(newIndices, 3));
+		#end
 		flxstripSprite.indices = DrawData.ofArray(newIndices);
 
 		// update uvtData
@@ -199,12 +207,40 @@ class PlayState extends FlxUIState
 		{
 			newUVData.push(j % 2);
 			newUVData.push(curV);
+			// the 't' in uvtData (technically optional but keeping it for the sake of completeness)
+			newUVData.push(1.0);
 			if(j % 2 == 1)
 			{
-				curV += 2.0/points.length;
+				curV += 1.0 / (Math.ceil(points.length * 0.5) - 1);
 			}
 		}
 
+		#if debug
+		trace(sPrintArrayFancy(newUVData, 3));
+		#end
 		flxstripSprite.uvtData = DrawData.ofArray(newUVData);
 	}
+	#if debug
+	function sPrintArrayFancy<T>(arr:Array<T>, n:Int = 0, indentSpaces:Int = 2):String
+	{
+		if (n == 0)
+			return Std.string(arr);
+
+		var s = '[\n';
+		var i = 0;
+		while (i < arr.length)
+		{
+			s += ' '.repeat(indentSpaces);
+			for (j in 0...n)
+			{
+				s += Std.string(arr[i + j]) + ', ';
+			}
+			s += '\n';
+			i += n;
+		}
+		s += ']';
+
+		return s;
+	}
+	#end
 }

@@ -18,7 +18,7 @@ class VertexPoint extends FlxSprite
 	public function new(X = 0.0, Y = 0.0, idx:Int)
 	{
 		super(X, Y);
-		makeGraphic(10, 10, FlxColor.TRANSPARENT, true);
+		makeGraphic(Std.int(2 * radius), Std.int(2 * radius), FlxColor.TRANSPARENT, true);
 		curColor = FlxColor.BLUE;
 		pointIndex = idx;
 		FlxMouseEvent.add(this, handleMouseDown, handleMouseUp, handleMouseOver, handleMouseOut);
