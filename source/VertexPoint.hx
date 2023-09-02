@@ -29,13 +29,14 @@ class VertexPoint extends FlxSprite
 		vp.curColor = FlxColor.RED;
 		vp.selected = true;
 		PlayState.selectedPoint = vp;
+		PlayState.setPointAttrsVisibility(true);
 	}
 
 	function handleMouseUp(vp:VertexPoint)
 	{
 		vp.curColor = FlxColor.BLUE;
 		vp.selected = false;
-		PlayState.selectedPoint = null;
+		// PlayState.selectedPoint = null;
 
 		if (PlayState.currentMode == VERTEX_REMOVE)
 		{
@@ -69,6 +70,14 @@ class VertexPoint extends FlxSprite
 			y += FlxG.mouse.deltaScreenY;
 			PlayState.flxstripSprite.vertices[pointIndex * 2] = x;
 			PlayState.flxstripSprite.vertices[pointIndex * 2 + 1] = y;
+		}
+		if (PlayState.selectedPoint == this)
+		{
+			curColor = FlxColor.MAGENTA;
+		}
+		else
+		{
+			curColor = FlxColor.BLUE;
 		}
 	}
 }

@@ -44,6 +44,7 @@ class PlayState extends FlxUIState
 		addPointsTxt.screenCenter();
 		add(addPointsTxt);
 		addPointsTxt.visible = false;
+		setPointAttrsVisibility(false);
 	}
 
 	override public function update(elapsed:Float)
@@ -54,6 +55,12 @@ class PlayState extends FlxUIState
 			// trace('Global mouse click!');
 			onMainAreaClick();
 		}
+		#if debug
+		if (FlxG.keys.justPressed.R)
+		{
+			FlxG.resetGame();
+		}
+		#end
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
@@ -124,6 +131,20 @@ class PlayState extends FlxUIState
 					currentMode = NORMAL;
 				case VERTEX_REMOVE:
 			}
+			var deselectAllPoints = true;
+			for (p in points)
+			{
+				if (FlxG.mouse.overlaps(p))
+				{
+					deselectAllPoints = false;
+					break;
+				}
+			}
+			if (deselectAllPoints)
+			{
+				selectedPoint = null;
+				setPointAttrsVisibility(false);
+			}
 		}
 	}
 
@@ -136,6 +157,21 @@ class PlayState extends FlxUIState
 		for(i in 0...thisState.points.length)
 		{
 			thisState.points[i].pointIndex = i;
+		}
+		selectedPoint = null;
+		setPointAttrsVisibility(false);
+	}
+
+	public static function setPointAttrsVisibility(visible:Bool)
+	{
+		var thisState = cast(FlxG.state, PlayState);
+		if (visible)
+		{
+			thisState._ui.setMode('vert_selected');
+		}
+		else
+		{
+			thisState._ui.setMode('no_selected');
 		}
 	}
 

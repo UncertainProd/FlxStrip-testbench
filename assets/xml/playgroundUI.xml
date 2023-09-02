@@ -1,20 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
-    <nineslicesprite width="30%" height="100%" slice9="6,6,12,12" name="ui_panel">
+    <group name="ui_base" />
+    <nineslicesprite group="ui_base" width="30%" height="100%" slice9="6,6,12,12" name="ui_panel">
         <anchor x="right" y="center" x-flush="right" y-flush="center" />
     </nineslicesprite>
 
     <definition name="ui_panel_button_text" size="12" color="0xffffff" outline="0x000000" align="center" />
     
-    <button name="add_vertex" x="10" y="20" width="150" height="50" label="+ Add Vertex">
+    <button group="ui_base" name="add_vertex" x="10" y="20" width="150" height="50" label="+ Add Vertex">
         <text use_def="ui_panel_button_text" />
         <param type="string" value="vertex-add" />
         <anchor x="ui_panel.left" x-flush="left" y="ui_panel.top" y-flush="top" />
     </button>
     
-    <button name="remove_vertex" x="10" y="20" width="150" height="50" label="- Remove Vertex">
+    <button group="ui_base" name="remove_vertex" x="10" y="20" width="150" height="50" label="- Remove Vertex">
         <text use_def="ui_panel_button_text" />
         <param type="string" value="vertex-remove" />
         <anchor x="ui_panel.left" x-flush="left" y="add_vertex.bottom" y-flush="top" />
     </button>
+
+    <text name="vert_attr_text" visible="false" text="Vertex Attributes" x="10" y="50" width="30%" size="20">
+        <anchor x="ui_panel.left" x-flush="left" y="remove_vertex.bottom" y-flush="top" />
+    </text>
+    
+    <!-- vertex(x,y), index, uvtdata(u,v,t) -->
+    <text name="vert_x_label" visible="true" text="Vertex X" x="10" y="15" width="10%" size="16">
+        <anchor x="ui_panel.left" x-flush="left" y="vert_attr_text.bottom" y-flush="top" />
+    </text>
+    <input_text name="vert_x" background="white" size="20" color="black">
+        <anchor x="vert_x_label.right" x-flush="left" y="vert_x_label.center" y-flush="center" />
+    </input_text>
+    
+    <text name="vert_y_label" visible="true" text="Vertex Y" x="10" y="15" width="10%" size="16">
+        <anchor x="ui_panel.left" x-flush="left" y="vert_x_label.bottom" y-flush="top" />
+    </text>
+    <input_text name="vert_y" background="white" size="20" color="black">
+        <anchor x="vert_y_label.right" x-flush="left" y="vert_y_label.center" y-flush="center" />
+    </input_text>
+
+
+    <text name="vert_index_label" visible="true" text="Index" x="10" y="15" width="10%" size="16">
+        <anchor x="ui_panel.left" x-flush="left" y="vert_y_label.bottom" y-flush="top" />
+    </text>
+    <input_text name="vert_index" background="white" size="20" color="black" filter="num">
+        <anchor x="vert_index_label.right" x-flush="left" y="vert_index_label.center" y-flush="center" />
+    </input_text>
+
+
+    <text name="uvt_u_label" visible="true" text="Vertex U" x="10" y="15" width="10%" size="16">
+        <anchor x="ui_panel.left" x-flush="left" y="vert_index_label.bottom" y-flush="top" />
+    </text>
+    <input_text name="uvt_u" background="white" size="20" color="black">
+        <anchor x="uvt_u_label.right" x-flush="left" y="uvt_u_label.center" y-flush="center" />
+    </input_text>
+    
+    <text name="uvt_v_label" visible="true" text="Vertex V" x="10" y="15" width="10%" size="16">
+        <anchor x="ui_panel.left" x-flush="left" y="uvt_u_label.bottom" y-flush="top" />
+    </text>
+    <input_text name="uvt_v" background="white" size="20" color="black">
+        <anchor x="uvt_v_label.right" x-flush="left" y="uvt_v_label.center" y-flush="center" />
+    </input_text>
+
+    <text name="uvt_t_label" visible="true" text="Vertex T" x="10" y="15" width="10%" size="16">
+        <anchor x="ui_panel.left" x-flush="left" y="uvt_v_label.bottom" y-flush="top" />
+    </text>
+    <input_text name="uvt_t" background="white" size="20" color="black">
+        <anchor x="uvt_t_label.right" x-flush="left" y="uvt_t_label.center" y-flush="center" />
+    </input_text>
+
+
+    <mode id="vert_selected">
+        <show name="vert_attr_text" />
+        <show name="vert_x_label" />
+        <show name="vert_x" />
+        <show name="vert_y_label" />
+        <show name="vert_y" />
+        <show name="vert_index_label" />
+        <show name="vert_index" />
+        <show name="uvt_u_label" />
+        <show name="uvt_u" />
+        <show name="uvt_v_label" />
+        <show name="uvt_v" />
+        <show name="uvt_t_label" />
+        <show name="uvt_t" />
+    </mode>
+    <mode id="no_selected">
+        <hide name="vert_attr_text" />
+        <hide name="vert_x_label" />
+        <hide name="vert_x" />
+        <hide name="vert_y_label" />
+        <hide name="vert_y" />
+        <hide name="vert_index_label" />
+        <hide name="vert_index" />
+        <hide name="uvt_u_label" />
+        <hide name="uvt_u" />
+        <hide name="uvt_v_label" />
+        <hide name="uvt_v" />
+        <hide name="uvt_t_label" />
+        <hide name="uvt_t" />
+    </mode>
+
 </data>

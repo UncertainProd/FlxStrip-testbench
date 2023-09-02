@@ -81,4 +81,7 @@
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here-->
+
+	<!-- Just for my own tests. Feel free to comment this out. Windows only btw -->
+	<postbuild cmd='robocopy /MIR export\windows\bin .\debug-dist' if="windows debug makecopy"/>
 </project>
